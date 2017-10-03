@@ -13,6 +13,7 @@ gem 'puma', '~> 3.7'
 # gem 'redis', '~> 3.0'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'rspec-rails'
+gem 'active_model_serializers'
 # gem 'capistrano-rails', group: :development
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
