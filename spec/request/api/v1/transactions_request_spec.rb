@@ -4,8 +4,8 @@ describe 'Transactions API', type: :request do
   it 'returns all of transactions' do
     customer = create(:customer)
     merchant = create(:merchant)
-    invoice = create(:invoice, customer_id: customer.id, merchant_id: merchant.id)
-    create_list(:transaction, 3, invoice_id: invoice.id)
+    invoice = create(:invoice, customer: customer, merchant: merchant)
+    create_list(:transaction, 3, invoice: invoice)
 
     get '/api/v1/transactions'
 
@@ -19,8 +19,8 @@ describe 'Transactions API', type: :request do
   it 'returns a single transactions by id' do
     customer = create(:customer)
     merchant = create(:merchant)
-    invoice = create(:invoice, customer_id: customer.id, merchant_id: merchant.id)
-    id = create(:transaction, invoice_id: invoice.id).id
+    invoice = create(:invoice, customer: customer, merchant: merchant)
+    id = create(:transaction, invoice: invoice).id
 
     get "/api/v1/transactions/#{id}"
 
