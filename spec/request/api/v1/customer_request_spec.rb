@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Customer API', type: :request do
-  it 'returns all of customers' do
+  it 'returns all of the customers' do
     create_list(:customer, 3)
 
     get '/api/v1/customers'
