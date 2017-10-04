@@ -9,6 +9,7 @@ Rails.application.routes.draw do
         get '/:id/items', to: 'items#index'
         get '/:id/invoices', to: 'invoices#index'
         get '/:id/customers_with_pending_invoices', to: 'customers#index'
+        get '/:id/favorite_customer', to: 'customers#show'
       end
 
       namespace 'customers' do

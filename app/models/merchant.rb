@@ -25,4 +25,12 @@ class Merchant < ApplicationRecord
                                       WHERE merchant_id=#{self.id}
                                       ORDER BY customers.id"
   end
+
+  def favorite_customer
+    customers.joins(:transactions)
+    .merge(Transaction.successful)
+    .group(:id)
+    .order('count(*) DESC')
+    .first
+  end
 end
