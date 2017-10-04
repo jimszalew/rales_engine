@@ -8,7 +8,6 @@ describe "Invoice's customer" do
       invoice = create(:invoice, customer: customer, merchant: merchant)
       id = invoice.id
 
-
       get "/api/v1/invoices/#{id}/customer"
 
       json_customer = JSON.parse(response.body)
