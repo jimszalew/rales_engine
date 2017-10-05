@@ -22,7 +22,7 @@ describe 'Merchants revenue' do
       json_revenue = JSON.parse(response.body, quirks_mode: true)
 
       expect(response).to be_success
-      expect(json_revenue).to eq(1200)
+      expect(json_revenue["revenue"]).to eq("12.0")
     end
   end
 end
