@@ -55,4 +55,12 @@ class Merchant < ApplicationRecord
     .order("totes_rev DESC")
     .limit(quantity)
   end
+
+  def self.most_items_sold(quantity = nil)
+    joins(invoices: [:transactions, :invoice_items])
+    .merge(Transaction.successful)
+    .group(:id)
+    .order("sum(quantity) DESC")
+    .limit(quantity)
+  end
 end
