@@ -11,6 +11,7 @@ Rails.application.routes.draw do
         get '/:id/customers_with_pending_invoices', to: 'customers#index'
         get '/:id/favorite_customer', to: 'customers#show'
         get '/:id/revenue', to: 'revenue#show'
+        get '/revenue', to: 'revenue#index'
       end
 
       namespace 'customers' do
