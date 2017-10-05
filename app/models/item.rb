@@ -27,4 +27,11 @@ class Item < ApplicationRecord
   def self.dollar_to_cents_all(params)
     where(unit_price: params.gsub!(/[^0-9A-Za-z]/, ''))
   end
+
+  def best_day
+    invoices.joins(:invoice_items)
+    .group(:id)
+    .order('sum(invoice_items.quantity) DESC, invoices.created_at DESC')
+    .first
+  end
 end
