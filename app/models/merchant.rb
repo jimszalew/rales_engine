@@ -34,8 +34,9 @@ class Merchant < ApplicationRecord
     .first
   end
 
-  def find_revenue
+  def find_revenue(date = nil)
     invoices.joins(:invoice_items, :transactions)
+    .merge(Invoice.date_match(date))
     .merge(Transaction.successful)
     .sum("quantity * unit_price")
   end
