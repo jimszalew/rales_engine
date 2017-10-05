@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Merchants revenue' do
-  context 'merchant/:id/revenue', type: :request do
+  context 'merchants/:id/revenue', type: :request do
     it 'returns merchants total revenue from all transactions' do
       customer = create(:customer)
       merchant = create(:merchant)
@@ -23,6 +23,28 @@ describe 'Merchants revenue' do
 
       expect(response).to be_success
       expect(json_revenue).to eq(1200)
+    end
+  end
+
+  context 'merchants/:id/revenue?date', type: :request do
+    it 'returns the total revenue for merchant by date' do
+      customer = create(:customer)
+      merchant = create(:merchant)
+      id = merchant.id
+      item = create(:item, merchant: merchant)
+      invoice1 = create(:invoice, merchant: merchant, customer: customer, created_at: "2012-03-10 00:54:09 UTC")
+      invoice2 = create(:invoice, merchant: merchant, customer: customer, created_at: "2012-03-11 00:54:09 UTC")
+      transaction1 = create(:transaction, invoice: invoice1, result: "success")
+      transaction2 = create(:transaction, invoice: invoice2, result: "success")
+      invoice_item1 = create(:invoice_item, invoice: invoice1, item: item, quantity: 50, unit_price: 10)
+      invoice_item2 = create(:invoice_item, invoice: invoice2, item: item, quantity: 60, unit_price: 20)
+
+      get "/api/v1/merchants/#{id}/revenue?date=#{invoice1.created_at}"
+
+      json_revenue = JSON.parse(response.body, quirks_mode: true)
+require "pry"; binding.pry
+      expect(response).to be_success
+
     end
   end
 end
