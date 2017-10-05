@@ -47,4 +47,12 @@ class Merchant < ApplicationRecord
     .where(invoices: {created_at: date})
     .merge(Transaction.successful)[0].total
   end
+
+  def self.top_merchants(quantity = nil)
+    select("merchants.*, sum(invoice_items.unit_price * invoice_items.quantity) AS totes_rev")
+    .joins(:transactions, :invoice_items)
+    .group(:id)
+    .order("totes_rev DESC")
+    .limit(quantity)
+  end
 end

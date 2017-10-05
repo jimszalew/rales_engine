@@ -78,4 +78,33 @@ describe 'Merchants revenue' do
       expect(revenue_json["total_revenue"]).to eq("16.0")
     end
   end
+
+  context "merchants/most_revenue?quantity=x", type: :request do
+    it "returns the top x merchants ranked by total revenue" do
+      merchant1 = create(:merchant)
+      merchant2 = create(:merchant)
+      merchant3 = create(:merchant)
+      customer = create(:customer)
+      item1 = create(:item, merchant: merchant1)
+      item2 = create(:item, merchant: merchant2)
+      item3 = create(:item, merchant: merchant3)
+      invoice1 = create(:invoice, merchant: merchant1, customer: customer, created_at: "2012-03-11 00:54:09 UTC")
+      invoice2 = create(:invoice, merchant: merchant1, customer: customer, created_at: "2012-03-11 00:54:09 UTC")
+      invoice3 = create(:invoice, merchant: merchant3, customer: customer, created_at: "2012-03-12 00:54:09 UTC")
+      transaction1 = create(:transaction, invoice: invoice1, result: "success")
+      transaction2 = create(:transaction, invoice: invoice2, result: "success")
+      transaction3 = create(:transaction, invoice: invoice3, result: "success")
+      invoice_item1 = create(:invoice_item, invoice: invoice1, item: item1, quantity: 60, unit_price: 20)
+      invoice_item2 = create(:invoice_item, invoice: invoice2, item: item2, quantity: 60, unit_price: 10)
+      invoice_item3 = create(:invoice_item, invoice: invoice3, item: item3, quantity: 40, unit_price: 30)
+
+      get "/api/v1/merchants/most_revenue?quantity=2"
+
+      top_merchants_json = JSON.parse(response.body)
+
+      expect(response).to be_success
+      expect(top_merchants_json.first["id"]).to eq(merchant1.id)
+      expect(top_merchants_json.last["id"]).to eq(merchant3.id)
+    end
+  end
 end
