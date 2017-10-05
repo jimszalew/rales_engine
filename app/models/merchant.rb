@@ -33,4 +33,10 @@ class Merchant < ApplicationRecord
     .order('count(*) DESC')
     .first
   end
+
+  def self.total_revenue
+    joins(invoices: [:invoice_items, :transactions])
+    .select("sum(invoice_items.unit_price * invoice_items.quantity) as total")
+    .merge(Transaction.successful)[0].total
+  end
 end
