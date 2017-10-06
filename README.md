@@ -24,3 +24,7 @@ Things you may want to cover:
 * Local test suite
 
 1. rspec
+
+* Check test coverage
+
+1. open coverage/index.html in the browser
