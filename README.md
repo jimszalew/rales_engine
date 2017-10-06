@@ -27,4 +27,4 @@ Things you may want to cover:
 
 * Check test coverage
 
-1. open coverage/index.html in the browser
+1. open coverage/index.html in your browser
